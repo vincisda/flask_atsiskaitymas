@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content-section"><form method="POST" action="{{ url_for('new_post') }}">{{ form.hidden_tag() }}
+    <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Naujas Irasas</legend>
+        <div class="form-group">
+            <select class="form-control" name= "make" method="GET">
+                {% for automobilis in visi_automobiliai %}
+                <option value= "{{automobilis.make}}">{{automobilis.make}}</option>"
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            {{ form.details.label(class="form-control-label") }}
+            {% if form.details.errors %}
+                {{ form.details(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.details.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.details(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.total_amount.label(class="form-control-label") }}
+            {% if form.total_amount.errors %}
+                {{ form.total_amount(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.total_amount.errors %}
+                        <span>{{ error }}</span>
+                        {{ form.errors }}
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.total_amount(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+    </fieldset>
+    <div class="form-group">
+        {{ form.submit(class="btn btn-outline-info") }}
+    </div>
+</form></div>
+
+{% endblock %}

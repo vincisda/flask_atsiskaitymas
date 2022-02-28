@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content-section"><form method="POST" action="{{ url_for('new_car') }}">{{ form.hidden_tag() }}
+    <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Naujas Automobilis</legend>
+        
+        <div class="form-group">
+            {{ form.make.label(class="form-control-label") }}
+            {% if form.make.errors %}
+                {{ form.make(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.make.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.make(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.model.label(class="form-control-label") }}
+            {% if form.model.errors %}
+                {{ form.model(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.model.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.model(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.engine.label(class="form-control-label") }}
+            {% if form.engine.errors %}
+                {{ form.engine(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.engine.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.engine(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.vin_number.label(class="form-control-label") }}
+            {% if form.vin_number.errors %}
+                {{ form.vin_number(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.vin_number.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.vin_number(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.plate_number.label(class="form-control-label") }}
+            {% if form.plate_number.errors %}
+                {{ form.plate_number(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.plate_number.errors %}
+                        <span>{{ error }}</span>
+                        {{ form.errors }}
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.plate_number(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+    </fieldset>
+    <div class="form-group">
+        {{ form.submit(class="btn btn-outline-info") }}
+    </div>
+</form></div>
+
+{% endblock %}
