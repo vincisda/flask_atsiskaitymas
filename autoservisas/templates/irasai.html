@@ -6,23 +6,19 @@
     <thead>
         <tr>
             <th scope="col">ID</th>
-            <th scope="col" class="text-center">Marke</th>
-            <th scope="col" class="text-center">Modelis</th>
-            <th scope="col" class="text-center">Variklis</th>
+            <th scope="col" class="text-center">Sukurta</th>
             <th scope="col" class="text-center">Suma</th>
             <th scope="col" class="text-center">Tekstas</th>
-            <th scope="col" class="text-center">Sukurta</th>
-            <th scope="col" class="text-center">Statusas</th>
+            <th scope="col" class="text-center">Remonto_Statusas</th>
+
+            
         </tr>
     </thead>
 {% for irasas in visi_irasai.items %}<tr>
     <th scope="row">{{ irasas.id }}</th>
-    <td class="text-center"> {{ pirmas_automobilis.make }} </td>
-    <td class="text-center"> {{ pirmas_automobilis.model }} </td>
-    <td class="text-center"> {{ pirmas_automobilis.engine }} </td>
+    <td class="text-center"> {{ irasas.created }} </td>
     <td class="text-center"> {{ irasas.total_amount }} </td>
     <td class="text-center"> {{ irasas.details }} </td>
-    <td class="text-center">{{ datetime.strftime(irasas.created, "%Y-%m-%d %H:%M:%S") }}</td>
     <td class="text-center"> {{ irasas.repair_status }} </td>
 </tr>{% endfor %}
 </table>

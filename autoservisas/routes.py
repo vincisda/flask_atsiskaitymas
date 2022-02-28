@@ -76,12 +76,11 @@ def prisijungimas():
     return render_template('prisijungimas.html', form=form, current_user=current_user)
 
 
-@app.route("/records")
+@app.route("/records/<int:id>")
 @login_required
-def records():
-    visi_automobiliai = Automobilis.query.filter_by(vartotojas_id=current_user.id)
-    visi_irasai = Irasas.query.filter_by(automobilis_id=visi_automobiliai)
-    return render_template("irasai.html", visi_irasai=visi_irasai, datetime=datetime, visi_automobiliai=visi_automobiliai)
+def records(id):
+    visi_irasai = Irasas.query.filter_by(automobilis_id=id)
+    return render_template("irasai.html", visi_irasai=visi_irasai, datetime=datetime)
 
 @app.route('/profilis', methods=['GET', 'POST'])
 @login_required

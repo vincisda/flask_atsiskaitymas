@@ -14,8 +14,10 @@
         </tr>
     </thead>
 {% for automobilis in visi_automobiliai %}<tr>
-    <a href="http://127.0.0.1:5000/records/"{{automobilis.id}}><th scope="row">{{ automobilis.id }}</th></a>
-    <td class="text-center"> {{ automobilis.make }} </td>
+
+
+    <td scope="row"> <a href="http://127.0.0.1:5000/records{{automobilis.id}}">{{ automobilis.id }} </a></td>
+    <td class="text-center"> {{ automobilis.make }}</td>
     <td class="text-center"> {{ automobilis.model }} </td>
     <td class="text-center"> {{ automobilis.engine }} </td>
     <td class="text-center"> {{ automobilis.vin_number }} </td>
