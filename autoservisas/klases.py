@@ -1,5 +1,4 @@
 from datetime import datetime
-from email.policy import default
 from flask_admin.contrib.sqla import ModelView
 from flask_login import UserMixin, current_user
 from sqlalchemy import DateTime

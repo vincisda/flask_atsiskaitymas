@@ -79,10 +79,9 @@ def prisijungimas():
 @app.route("/records")
 @login_required
 def records():
-   
-    pirmas_automobilis = Automobilis.query.filter_by(vartotojas_id=current_user.id).first()
-    visi_irasai = Irasas.query.filter_by(automobilis_id=pirmas_automobilis.id)
-    return render_template("irasai.html", visi_irasai=visi_irasai, datetime=datetime, pirmas_automobilis=pirmas_automobilis)
+    visi_automobiliai = Automobilis.query.filter_by(vartotojas_id=current_user.id)
+    visi_irasai = Irasas.query.filter_by(automobilis_id=visi_automobiliai)
+    return render_template("irasai.html", visi_irasai=visi_irasai, datetime=datetime, visi_automobiliai=visi_automobiliai)
 
 @app.route('/profilis', methods=['GET', 'POST'])
 @login_required
@@ -147,13 +146,10 @@ def new_post():
     form = forms.NaujoIrasoForma()
     if form.validate_on_submit():
         automobilis = Automobilis.query.filter_by(make=form.make.data).first()
-        naujas_irasas = Irasas(
-            
-            model = automobilis.model,
-            engine = automobilis.engine,
+        naujas_irasas = Irasas(          
+            automobilis_id = automobilis.id,
             total_amount= form.total_amount.data,
-            details = form.details.data
-            
+            details = form.details.data         
         )
         db.session.add(naujas_irasas)
         db.session.commit()
