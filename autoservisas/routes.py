@@ -76,11 +76,19 @@ def prisijungimas():
     return render_template('prisijungimas.html', form=form, current_user=current_user)
 
 
-@app.route("/records/<int:id>")
+@app.route("/records/<int:id>", methods=['GET', 'POST'])
 @login_required
 def records(id):
+    automobilis= Automobilis.query.filter_by(id=id).first()
     visi_irasai = Irasas.query.filter_by(automobilis_id=id)
-    return render_template("irasai.html", visi_irasai=visi_irasai, datetime=datetime)
+    return render_template("irasai.html", visi_irasai=visi_irasai, datetime=datetime, automobilis=automobilis)
+
+@app.route("/all_records", methods=['GET', 'POST'])
+@login_required
+def all_records():
+    if current_user.is_employee:
+        visi_irasai = Irasas.query.all()
+        return render_template("visi_irasai.html", visi_irasai=visi_irasai, datetime=datetime)
 
 @app.route('/profilis', methods=['GET', 'POST'])
 @login_required
@@ -101,29 +109,27 @@ def profilis():
        
     return render_template('profilis.html', current_user=current_user, form=form)
 
-@app.route('/iraso_koregavimas', methods=['GET', 'POST'])
+@app.route('/iraso_koregavimas/<int:id>', methods=['GET', 'POST'])
 @login_required
-
-def iraso_koregavimas():
+def iraso_koregavimas(id):
     if current_user.is_employee:
-        page = request.args.get('page', 1, type=int)
-        visi_irasai = Irasas.query.all()
+        irasas = Irasas.query.filter_by(id=id).first()
         form = forms.AtnaujintoIrasoForma()
         if form.validate_on_submit():
-            visi_irasai.total_amount = form.total_amount.data
-            visi_irasai.details = form.details.data
-            visi_irasai.repair_status = form.repair_status.data
+            irasas.total_amount = form.total_amount.data
+            irasas.details = form.details.data
+            irasas.repair_status = form.repair_status.data
             db.session.commit()
             flash('Irasas atnaujintas!', 'success')
-            return redirect(url_for('iraso_koregavimas'))
+            return redirect(url_for('all_records'))
         elif request.method == "GET":
-            form.total_amount.data = visi_irasai.total_amount
-            form.details.data = visi_irasai.details
-            form.repair_status.data = visi_irasai.repair_status
+            form.total_amount.data = irasas.total_amount
+            form.details.data = irasas.details
+            form.repair_status.data = irasas.repair_status
     else:
         return redirect(url_for('home'))
     
-    return render_template('koregavimas.html', current_user=current_user, form=form, visi_irasai=visi_irasai)
+    return render_template('koregavimas.html', current_user=current_user, form=form, irasas=irasas)
 
 @app.route("/atsijungimas")
 def atsijungimas():
@@ -147,8 +153,7 @@ def new_post():
         automobilis = Automobilis.query.filter_by(make=form.make.data).first()
         naujas_irasas = Irasas(          
             automobilis_id = automobilis.id,
-            total_amount= form.total_amount.data,
-            details = form.details.data         
+            details = form.details.data
         )
         db.session.add(naujas_irasas)
         db.session.commit()

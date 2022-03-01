@@ -6,20 +6,37 @@
     <thead>
         <tr>
             <th scope="col">ID</th>
+            <th scope="col" class="text-center">Marke</th>
+            <th scope="col" class="text-center">Modelis</th>
+            <th scope="col" class="text-center">Valstybinis Nr</th>
             <th scope="col" class="text-center">Sukurta</th>
             <th scope="col" class="text-center">Suma</th>
             <th scope="col" class="text-center">Tekstas</th>
-            <th scope="col" class="text-center">Remonto_Statusas</th>
+            <th scope="col" class="text-center">Remonto Statusas</th>
 
             
         </tr>
     </thead>
-{% for irasas in visi_irasai.items %}<tr>
+{% for irasas in visi_irasai %}<tr>
+    {% if irasas.repair_status == "Uzdarytas" %}
     <th scope="row">{{ irasas.id }}</th>
+    <td class="text-decoration-line-through"> {{ automobilis.make }} </td>
+    <td class="text-decoration-line-through"> {{ automobilis.model }} </td>
+    <td class="text-decoration-line-through"> {{ automobilis.plate_number }} </td>
+    <td class="text-decoration-line-through"> {{ irasas.created }} </td>
+    <td class="text-decoration-line-through"> {{ irasas.total_amount }} </td>
+    <td class="text-decoration-line-through"> {{ irasas.details }} </td>
+    <td class="text-decoration-line-through"> {{ irasas.repair_status }} </td>
+    {% else %}
+    <th scope="row">{{ irasas.id }}</th>
+    <td class="text-center"> {{ automobilis.make }} </td>
+    <td class="text-center"> {{ automobilis.model }} </td>
+    <td class="text-center"> {{ automobilis.plate_number }} </td>
     <td class="text-center"> {{ irasas.created }} </td>
     <td class="text-center"> {{ irasas.total_amount }} </td>
     <td class="text-center"> {{ irasas.details }} </td>
     <td class="text-center"> {{ irasas.repair_status }} </td>
+    {% endif %}
 </tr>{% endfor %}
 </table>
 
