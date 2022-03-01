@@ -87,7 +87,7 @@ def records(id):
 @login_required
 def all_records():
     if current_user.is_employee:
-        visi_irasai = Irasas.query.all()
+        visi_irasai = Irasas.query.order_by(Irasas.repair_status).all()
         return render_template("visi_irasai.html", visi_irasai=visi_irasai, datetime=datetime)
 
 @app.route('/profilis', methods=['GET', 'POST'])
