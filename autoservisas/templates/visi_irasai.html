@@ -6,6 +6,8 @@
     <thead>
         <tr>
             <th scope="col">ID</th>
+            <th scope="col" class="text-center">Zenklas</th>
+            <th scope="col" class="text-center">Valstybinis numeris</th>
             <th scope="col" class="text-center">Sukurta</th>
             <th scope="col" class="text-center">Suma</th>
             <th scope="col" class="text-center">Tekstas</th>
@@ -16,7 +18,14 @@
     </thead>
 {% for irasas in visi_irasai %}<tr>
     {% if irasas.repair_status == "Uzdarytas" %}
+        
         <th scope="row"><a href="http://127.0.0.1:5000/iraso_koregavimas/{{ irasas.id }}">{{ irasas.id }}</a></th>
+        {% for automobilis in visi_automobiliai %}
+        {% if automobilis.id == irasas.automobilis_id %}
+            <td class="text-decoration-line-through text-center"> {{ automobilis.make }} </td>
+            <td class="text-decoration-line-through text-center"> {{ automobilis.plate_number }} </td>
+        {% endif %}
+        {% endfor %}
         <td class="text-decoration-line-through text-center"> {{ irasas.created }} </td>
         <td class="text-decoration-line-through text-center"> {{ irasas.total_amount }} </td>
         <td class="text-decoration-line-through text-center"> {{ irasas.details }} </td>
@@ -24,6 +33,12 @@
     </tr>
     {% else %}
         <th scope="row"><a href="http://127.0.0.1:5000/iraso_koregavimas/{{ irasas.id }}">{{ irasas.id }}</a></th>
+        {% for automobilis in visi_automobiliai %}
+            {% if automobilis.id == irasas.automobilis_id %}
+                <td class="text-center"> {{ automobilis.make }} </td>
+                <td class="text-center"> {{ automobilis.plate_number }} </td>
+        {% endif %}
+        {% endfor %}
         <td class="text-center"> {{ irasas.created }} </td>
         <td class="text-center"> {{ irasas.total_amount }} </td>
         <td class="text-center"> {{ irasas.details }} </td>

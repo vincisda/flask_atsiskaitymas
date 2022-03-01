@@ -87,8 +87,9 @@ def records(id):
 @login_required
 def all_records():
     if current_user.is_employee:
+        visi_automobiliai = Automobilis.query.all()
         visi_irasai = Irasas.query.order_by(Irasas.repair_status).all()
-        return render_template("visi_irasai.html", visi_irasai=visi_irasai, datetime=datetime)
+        return render_template("visi_irasai.html", visi_irasai=visi_irasai, datetime=datetime, visi_automobiliai=visi_automobiliai)
 
 @app.route('/profilis', methods=['GET', 'POST'])
 @login_required
